@@ -10,9 +10,6 @@ const user = require(
 )
 const Sse = require('json-sse')
 
-const login = require('./auth/router')
-app.use(login)
-
 const roomFactory = require('./room/router')
 const Room = require('./room/model')
 
@@ -26,24 +23,19 @@ app.use(corsMiddleware)
 const parserMiddleware = bodyParser.json()
 app.use(parserMiddleware)
 
-
-const userRouter = userFactory(
-  )
-  app.use(userRouter)
-
-async function serialize () {
+async function serialize() {
   const rooms = await Room.findAll({})
 
   return JSON.stringify(rooms)
-} 
+}
 
-async function update () {
+async function update() {
   const data = await serialize()
-  
+
   stream.send(data)
 }
 
-async function onStream (req, res) {
+async function onStream(req, res) {
   const data = await serialize()
 
   stream.updateInit(data)
@@ -54,6 +46,12 @@ app.get('/stream', onStream)
 
 const roomRouter = roomFactory(update)
 app.use(roomRouter)
+
+const userRouter = userFactory()
+app.use(userRouter)
+
+const login = require('./auth/router')
+app.use(login)
 
 
 const port = process.env.PORT || 4000
