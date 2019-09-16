@@ -3,6 +3,9 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const db = require('./db')
 
+const login = require('./auth/router')
+app.use(login)
+
 const app = express()
 
 const corsMiddleware = cors()
