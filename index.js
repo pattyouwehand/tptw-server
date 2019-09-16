@@ -10,12 +10,14 @@ const user = require(
 )
 const Sse = require('json-sse')
 
+const login = require('./auth/router')
+app.use(login)
 
 const roomFactory = require('./room/router')
 const Room = require('./room/model')
 
-
 const stream = new Sse()
+
 const app = express()
 
 const corsMiddleware = cors()
