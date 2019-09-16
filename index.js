@@ -2,6 +2,12 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const db = require('./db')
+const userFactory = require(
+  './user/router'
+)
+const user = require(
+  './user/model'
+)
 
 const app = express()
 
@@ -10,6 +16,10 @@ app.use(corsMiddleware)
 
 const parserMiddleware = bodyParser.json()
 app.use(parserMiddleware)
+
+const userRouter = userFactory(
+  )
+  app.use(userRouter)
 
 const port = process.env.PORT || 4000
 
