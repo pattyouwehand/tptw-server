@@ -1,7 +1,15 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const db = require('./db')
+const userFactory = require(
+  './user/router'
+)
+const user = require(
+  './user/model'
+)
 const Sse = require('json-sse')
+
 
 const roomFactory = require('./room/router')
 const Room = require('./room/model')
@@ -15,6 +23,11 @@ app.use(corsMiddleware)
 
 const parserMiddleware = bodyParser.json()
 app.use(parserMiddleware)
+
+
+const userRouter = userFactory(
+  )
+  app.use(userRouter)
 
 async function serialize () {
   const rooms = await Room.findAll({})
@@ -39,6 +52,7 @@ app.get('/stream', onStream)
 
 const roomRouter = roomFactory(update)
 app.use(roomRouter)
+
 
 const port = process.env.PORT || 4000
 
