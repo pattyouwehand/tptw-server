@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
-// const Room = require(
-//   '../room/model'
-// )
+const Room = require(
+  '../room/model'
+)
 
 const User = db.define(
   'user',
@@ -15,7 +15,7 @@ const User = db.define(
   }
 )
 
-// Room.hasMany(User)
-// User.belongsTo(Room)
+Room.hasMany(User)
+User.belongsTo(Room)
 
 module.exports = User
