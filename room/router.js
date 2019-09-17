@@ -1,6 +1,7 @@
 const express = require('express')
 const { Router } = express
 const Room = require('./model')
+const auth = require('../auth/middleware')
 
 function factory (update) {
   const router = new Router()
@@ -15,7 +16,7 @@ function factory (update) {
     return res.send(room)
   }
 
-  router.post('/room', newRoom)
+  router.post('/room', auth, newRoom)
 
   return router
 }
