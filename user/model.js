@@ -9,9 +9,9 @@ const User = db.define(
   {
     name: Sequelize.STRING,
     password: Sequelize.STRING,
-    score: Sequelize.INTEGER,
-    answered: Sequelize.BOOLEAN,
-    allies: Sequelize.BOOLEAN
+    score: { type: Sequelize.INTEGER, defaultValue: 0},
+    answered: { type: Sequelize.BOOLEAN, defaultValue: false },
+    allies: { type: Sequelize.BOOLEAN, defaultValue: false }
   }
 )
 
