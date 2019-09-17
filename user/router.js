@@ -1,26 +1,24 @@
-const express = require('express')
-const { Router } = express
-const User = require('./model')
-const bcrypt = require('bcryptjs')
+const express = require('express')
+const { Router } = express
+const User = require('./model')
+const bcrypt = require('bcryptjs')
 
+function factory() {
+  const router = new Router()
 
-function factory() {
-  const router = new Router()
-
-  router.post('/user', (req, res, next) => {
-    const user = {
-      name: req.body.name,
-      password: bcrypt.hashSync(req.body.password, 10)
-    }
-    
-    User
-      .create(user)
-      .then(user => { res.send(user)})
-      .catch(err => next(err))
-  })
-  return router
+  router.post('/user', (req, res, next) => {
+    const user = {
+      name: req.body.name,
+      password: bcrypt.hashSync(req.body.password, 10)
+    }
+    
+    User
+      .create(user)
+      .then(user => { res.send(user)})
+      .catch(err => next(err))
+  })
+  return router
 }
 
 
-
-module.exports = factory
+module.exports = factory
