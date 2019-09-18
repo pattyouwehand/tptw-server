@@ -26,6 +26,16 @@ function factory() {
         user.update({ roomId: req.body.roomId })
       })
       .then(user => res.json(user))
+      .catch(err => next(err))
+  })
+
+  router.put('/user/:id/allies', (req, res, next) => {
+    User.findByPk(req.params.id)
+      .then(user => {
+        user.update({ allies: true })
+      })
+      .then(user => res.json(user))
+      .catch(err => next(err))
   })
   
   return router
