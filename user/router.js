@@ -5,31 +5,36 @@ const bcrypt = require('bcryptjs')
 const auth = require('../auth/middleware')
 
 
-function factory() {
+function factory(update) {
   const router = new Router()
 
-  router.post('/user', (req, res, next) => {
+  async function onRegistry (req, res) {
     const user = {
       name: req.body.name,
       password: bcrypt.hashSync(req.body.password, 10)
     }
-    
-    User
-      .create(user)
-      .then(user => { res.send(user)})
-      .catch(err => next(err))
-  })
 
-  router.put('/user/:id', (req, res, next) => {
-    User.findByPk(req.params.id)
-      .then(user => {
-        user.update({ roomId: req.body.roomId })
-      })
-      .then(user => res.json(user))
-      .catch(err => next(err))
-  })
+    const registeredUser = await User.create(user)
 
-  router.put('/user/:id/allies', (req, res, next) => {
+    await update()
+
+    return res.send(registeredUser)
+  }
+
+  router.post('/user', onRegistry)
+
+  async function onRoomEntry (req, res) {
+    const enteredUser = await User.findByPk(req.params.id)
+    const updatedUser = await enteredUser.update({ roomId: req.body.roomId})
+
+    await update()
+      
+    return res.send(updatedUser)
+  }
+
+  router.put('/user/:id', onRoomEntry)
+  
+    router.put('/user/:id/allies', (req, res, next) => {
     User.findByPk(req.params.id)
       .then(user => {
         user.update({ allies: true })

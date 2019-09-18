@@ -22,14 +22,7 @@ function factory (update) {
   router.get('/room/:id', (req, res, next) => {
     Room.findByPk(req.params.id
       , {include: [{where: {roomId: req.params.id}}]}) 
-    //   [{
-    //     model: User,
-    //     where: { roomId: req.params.id }
-    //   }]
-    // }
-    // )
       .then(room => {
-        console.log('room:', room.dataValues)
         if (room) {
           res.json(room)
         } else {

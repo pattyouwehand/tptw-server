@@ -47,7 +47,7 @@ app.get('/stream', onStream)
 const roomRouter = roomFactory(update)
 app.use(roomRouter)
 
-const userRouter = userFactory()
+const userRouter = userFactory(update)
 app.use(userRouter)
 
 const login = require('./auth/router')
