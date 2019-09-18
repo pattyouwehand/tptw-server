@@ -23,11 +23,11 @@ function factory() {
   router.put('/user/:id', (req, res, next) => {
     User.findByPk(req.params.id)
       .then(user => {
-        console.log(req.body)
         user.update({ roomId: req.body.roomId })
       })
       .then(user => res.json(user))
   })
+  
   return router
 }
 
