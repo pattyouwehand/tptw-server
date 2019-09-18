@@ -34,14 +34,17 @@ function factory(update) {
 
   router.put('/user/:id', onRoomEntry)
   
-    router.put('/user/:id/allies', (req, res, next) => {
-    User.findByPk(req.params.id)
-      .then(user => {
-        user.update({ allies: true })
-      })
-      .then(user => res.json(user))
-      .catch(err => next(err))
-  })
+  async function chooseSide(req, res) {
+    const user = await User.findByPk(req.params.id)
+    const userWithSide = await user.update({ allies: true })
+
+    await update()
+
+    return res.send(userWithSide)
+  }
+
+
+  router.put('/user/:id/allies', chooseSide)
   
   return router
 }
