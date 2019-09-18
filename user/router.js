@@ -13,7 +13,7 @@ function factory(update) {
       name: req.body.name,
       password: bcrypt.hashSync(req.body.password, 10)
     }
-    
+
     const registeredUser = await User.create(user)
 
     await update()
@@ -33,6 +33,15 @@ function factory(update) {
   }
 
   router.put('/user/:id', onRoomEntry)
+  
+    router.put('/user/:id/allies', (req, res, next) => {
+    User.findByPk(req.params.id)
+      .then(user => {
+        user.update({ allies: true })
+      })
+      .then(user => res.json(user))
+      .catch(err => next(err))
+  })
   
   return router
 }
