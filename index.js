@@ -5,7 +5,7 @@ const db = require('./db')
 const userFactory = require(
   './user/router'
 )
-const user = require(
+const User = require(
   './user/model'
 )
 const Sse = require('json-sse')
@@ -24,7 +24,7 @@ const parserMiddleware = bodyParser.json()
 app.use(parserMiddleware)
 
 async function serialize() {
-  const rooms = await Room.findAll({})
+  const rooms = await Room.findAll({ include: User })
 
   return JSON.stringify(rooms)
 }
