@@ -73,6 +73,20 @@ async function answeredWrong(req, res){
 }
 
 router.put('/user/:id/alliedgame1', answeredWrong)
+
+async function resetAnswer (req, res) {
+  const user = await User.findByPk(req.params.id)
+  const updateStatus = await user.update({
+    answered: false })
+
+  await update()
+
+  return res.send(updateStatus)
+
+}
+
+router.put('/user/:id/resetAnswer', resetAnswer)
+
 return router
 
 }
