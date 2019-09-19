@@ -59,7 +59,22 @@ function factory(update) {
   }
 
   router.put('/user/:id/alliedgame', answeredRight)
-  return router
+
+
+async function answeredWrong(req, res){
+  const user = await User.findByPk(req.params.id)
+  const updateStatus = await user.update({
+    answered: true})
+
+  await update()
+
+  return res.send(updateStatus)
+
+}
+
+router.put('/user/:id/alliedgame1', answeredWrong)
+return router
+
 }
 
 
