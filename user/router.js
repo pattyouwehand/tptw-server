@@ -45,10 +45,22 @@ function factory(update) {
 
 
   router.put('/user/:id/allies', chooseSide)
-  
+
+  async function answeredRight(req, res){
+    const user = await User.findByPk(req.params.id)
+    const updateStatus = await user.update({
+      score: +1,
+      answered: true})
+
+    await update()
+
+    return res.send(updateStatus)
+
+  }
+
+  router.put('/user/:id/alliedgame', answeredRight)
   return router
 }
-
 
 
 module.exports = factory

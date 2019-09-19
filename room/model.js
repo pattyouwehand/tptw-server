@@ -7,7 +7,7 @@ const Room = db.define('room', {
   },
   round: {
     type: Sequelize.INTEGER,
-    defaultValue: 1
+    defaultValue: 0
   }
 })
 
