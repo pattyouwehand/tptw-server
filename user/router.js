@@ -49,7 +49,7 @@ function factory(update) {
   async function answeredRight(req, res){
     const user = await User.findByPk(req.params.id)
     const updateStatus = await user.update({
-      score: +1,
+      score: user.score +1,
       answered: true})
 
     await update()
@@ -64,7 +64,7 @@ function factory(update) {
 async function answeredWrong(req, res){
   const user = await User.findByPk(req.params.id)
   const updateStatus = await user.update({
-    answered: true})
+    answered: true })
 
   await update()
 
