@@ -33,7 +33,7 @@ function factory (update) {
 
   async function goToNextRound (req, res) {
     const room = await Room.findByPk(req.params.id)
-    const updatedRoom = await room.update({ round: +1 })
+    const updatedRoom = await room.update({ round: room.round + 1 })
 
     await update()
 
