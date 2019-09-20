@@ -42,6 +42,18 @@ function factory (update) {
   
   router.put('/room/:id/nextRound', goToNextRound)
 
+  async function resetRoom(req, res) {
+    const room = await Room.findByPk(req.params.id)
+    const updatedRoom = await room.update({ round: 0 })
+
+    await update()
+
+    return res.send(updatedRoom)
+  }
+  
+  router.put('/room/:id/resetRoom', resetRoom)
+
+
   return router
 }
 

@@ -87,6 +87,19 @@ async function resetAnswer (req, res) {
 
 router.put('/user/:id/resetAnswer', resetAnswer)
 
+async function resetUser (req, res) {
+  const user = await User.findByPk(req.params.id)
+  const updateStatus = await user.update({
+    answered: false, score: 0, allies: false, roomId: null })
+
+  await update()
+
+  return res.send(updateStatus)
+
+}
+
+router.put('/user/:id/resetUser', resetUser)
+
 return router
 
 }
